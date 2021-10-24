@@ -178,16 +178,22 @@
     <Compile Include="Migrations\202110240324479_StaffDb.Designer.cs">
       <DependentUpon>202110240324479_StaffDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110240450171_TrainerDb.cs" />
+    <Compile Include="Migrations\202110240450171_TrainerDb.Designer.cs">
+      <DependentUpon>202110240450171_TrainerDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Staff.cs" />
+    <Compile Include="Models\Trainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Util\Role.cs" />
     <Compile Include="ViewModel\CreateStaffViewModel.cs" />
+    <Compile Include="ViewModel\CreateTrainerViewModel.cs" />
     <Compile Include="ViewModel\PasswordViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +256,10 @@
     <Content Include="Views\Admin\StaffList.cshtml" />
     <Content Include="Views\Admin\EditStaff.cshtml" />
     <Content Include="Views\Admin\StaffChangePassword.cshtml" />
+    <Content Include="Views\Admin\CreateTrainer.cshtml" />
+    <Content Include="Views\Admin\TrainerList.cshtml" />
+    <Content Include="Views\Admin\EditTrainer.cshtml" />
+    <Content Include="Views\Admin\TrainerChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -270,6 +280,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202110240324479_StaffDb.resx">
       <DependentUpon>202110240324479_StaffDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110240450171_TrainerDb.resx">
+      <DependentUpon>202110240450171_TrainerDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

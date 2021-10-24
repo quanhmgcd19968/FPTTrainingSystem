@@ -10,7 +10,7 @@ namespace DemoProject1.Models
         {
         }
         public DbSet<Staff> StaffDb { get; set; }
-
+        public DbSet<Trainer> TrainerDb { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

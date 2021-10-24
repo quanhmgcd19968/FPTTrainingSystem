@@ -165,5 +165,119 @@ namespace DemoProject1.Controllers
             _context.SaveChanges();
             return RedirectToAction("StaffList", "Admin", new { Message = ManageMessageId.ChangePasswordSuccess });
         }
+        public ActionResult TrainerList()
+        {
+            var Trainer = _context.TrainerDb.Include(t => t.User).ToList();
+            return View(Trainer);
+        }
+        [HttpGet]
+        public ActionResult CreateTrainer()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateTrainer(CreateTrainerViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = viewModel.Email, Email = viewModel.Email };
+                var result = await UserManager.CreateAsync(user, viewModel.Password);
+                var TrainerId = user.Id;
+                var newTrainer = new Trainer()
+                {
+                    TrainerId = TrainerId,
+                    Name = viewModel.Name,
+                    Age = viewModel.Age,
+                    Address = viewModel.Address,
+                    Specialty = viewModel.Specialty
+                };
+                if (result.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(user.Id, Role.Trainer);
+                    _context.TrainerDb.Add(newTrainer);
+                    _context.SaveChanges();
+                    return RedirectToAction("TrainerList", "Admin");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(viewModel);
+        }
+        [HttpGet]
+        public ActionResult DeleteTrainer(string id)
+        {
+            var trainerInDb = _context.Users
+                .SingleOrDefault(t => t.Id == id);
+            var trainerInfoInDb = _context.TrainerDb
+                .SingleOrDefault(t => t.TrainerId == id);
+            if (trainerInDb == null || trainerInfoInDb == null)
+            {
+                return HttpNotFound();
+            }
+            _context.Users.Remove(trainerInDb);
+            _context.TrainerDb.Remove(trainerInfoInDb);
+            _context.SaveChanges();
+            return RedirectToAction("TrainerList", "Admin");
+        }
+        [HttpGet]
+        public ActionResult EditTrainer(string id)
+        {
+            var trainerInDb = _context.TrainerDb
+                .SingleOrDefault(t => t.TrainerId == id);
+            if (trainerInDb == null)
+            {
+                return HttpNotFound();
+            }
+            return View(trainerInDb);
+        }
+
+        [HttpPost]
+        public ActionResult EditTrainer(Trainer trainer)
+        {
+            var trainerInDb = _context.TrainerDb.SingleOrDefault(t => t.TrainerId == trainer.TrainerId);
+            if (trainerInDb == null)
+            {
+                return HttpNotFound();
+            }
+            trainerInDb.Name = trainer.Name;
+            trainerInDb.Age = trainer.Age;
+            trainerInDb.Address = trainer.Address;
+
+            _context.SaveChanges();
+            return RedirectToAction("TrainerList", "Admin");
+        }
+        public ActionResult TrainerChangePassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Manage/ChangePassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> TrainerChangePassword(PasswordViewModel model, string id)
+        {
+            var userInDb = _context.Users.SingleOrDefault(i => i.Id == id);
+            if (userInDb == null)
+            {
+                return HttpNotFound();
+            }
+            var userId = System.Web.HttpContext.Current.User.Identity.GetUserId();
+            userId = userInDb.Id;
+
+            if (userId != null)
+            {
+                UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+                userManager.RemovePassword(userId);
+                string newPassword = model.NewPassword;
+                userManager.AddPassword(userId, newPassword);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("TrainerList", "Admin", new { Message = ManageMessageId.ChangePasswordSuccess });
+        }
     }
 }
