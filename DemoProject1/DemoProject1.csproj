@@ -169,6 +169,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
@@ -195,10 +197,20 @@
     <Compile Include="Migrations\202110240649046_TraineeDb2.Designer.cs">
       <DependentUpon>202110240649046_TraineeDb2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110240740140_CategoryDb.cs" />
+    <Compile Include="Migrations\202110240740140_CategoryDb.Designer.cs">
+      <DependentUpon>202110240740140_CategoryDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110240758574_CourseDb.cs" />
+    <Compile Include="Migrations\202110240758574_CourseDb.Designer.cs">
+      <DependentUpon>202110240758574_CourseDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Course.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\Trainee.cs" />
@@ -206,6 +218,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Util\Role.cs" />
+    <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\CreateStaffViewModel.cs" />
     <Compile Include="ViewModel\CreateTraineeViewModel.cs" />
     <Compile Include="ViewModel\CreateTrainerViewModel.cs" />
@@ -278,6 +291,11 @@
     <Content Include="Views\Staff\EditTrainee.cshtml" />
     <Content Include="Views\Staff\CreateTrainee.cshtml" />
     <Content Include="Views\Staff\TraineeList.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Category\CreateCategory.cshtml" />
+    <Content Include="Views\Category\EditCategory.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Course\CreateCourse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -310,6 +328,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110240649046_TraineeDb2.resx">
       <DependentUpon>202110240649046_TraineeDb2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110240740140_CategoryDb.resx">
+      <DependentUpon>202110240740140_CategoryDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110240758574_CourseDb.resx">
+      <DependentUpon>202110240758574_CourseDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
