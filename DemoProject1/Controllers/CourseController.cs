@@ -1,6 +1,7 @@
 ﻿using DemoProject1.Models;
 using DemoProject1.Util;
 using DemoProject1.ViewModel;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
@@ -62,6 +63,155 @@ namespace DemoProject1.Controllers
             _context.CourseDb.Add(newCourse);
             _context.SaveChanges();
             return RedirectToAction("Index", "Course");
+        }
+        [HttpGet]
+        public ActionResult EditCourse(int id)
+        {
+            var CourseInDb = _context.CourseDb
+                .SingleOrDefault(t => t.Id == id);
+            if (CourseInDb == null)
+            {
+                return HttpNotFound();
+            }
+            var viewModel = new CourseViewModel
+            {
+                Course = CourseInDb,
+                Category = _context.CategoryDb.ToList()
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult EditCourse(CourseViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new CourseViewModel
+                {
+                    Course = model.Course,
+                    Category = _context.CategoryDb.ToList()
+                };
+                return View(viewModel);
+            }
+            var CourseInDb = _context.CourseDb
+                .SingleOrDefault(t => t.Id == model.Course.Id);
+            if (CourseInDb == null)
+            {
+                return HttpNotFound();
+            }
+            CourseInDb.Name = model.Course.Name;
+            CourseInDb.Description = model.Course.Description;
+            CourseInDb.CategoryId = model.Course.CategoryId;
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Course");
+        }
+        [HttpGet]
+        public ActionResult DeleteCourse(int id)
+        {
+            var CourseInDb = _context.CourseDb
+                .SingleOrDefault(t => t.Id == id);
+            /*var CoursesTraineeInDb = _context.TraineesCourses
+                .SingleOrDefault(t => t.CourseId == id);
+            var CoursesTrainerInDb = _context.TrainersCourses
+                .SingleOrDefault(t => t.CourseId == id);*/
+            if (CourseInDb == null)
+            {
+                ModelState.AddModelError("", "Course is not Exist");
+                return RedirectToAction("Index", "Course");
+            }
+            /*            _context.TrainersCourses.Remove(CoursesTrainerInDb);
+                        _context.TraineesCourses.Remove(CoursesTraineeInDb);*/
+            _context.CourseDb.Remove(CourseInDb);
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Course");
+        }
+        [HttpGet]
+        public ActionResult GetTrainers(string SearchCourse)
+        {
+            var course = _context.CourseDb
+                .Include(t => t.Category)
+                .ToList();
+            var trainer = _context.TrainerCourseDb.ToList();
+
+            List<CourseTrainerViewModel> viewModel = _context.TrainerCourseDb
+                .GroupBy(i => i.Course)
+                .Select(res => new CourseTrainerViewModel
+                {
+                    Course = res.Key,
+                    Trainers = res.Select(u => u.Trainer).ToList()
+                })
+                .ToList();
+            if (!string.IsNullOrEmpty(SearchCourse))
+            {
+                viewModel = viewModel
+                    .Where(t => t.Course.Name.ToLower().Contains(SearchCourse.ToLower())).
+                    ToList();
+            }
+            return View(viewModel);
+
+        }
+        [HttpGet]
+        public ActionResult AddTrainer()
+        {
+            var viewModel = new TrainerCourseViewModel
+            {
+                Courses = _context.CourseDb.ToList(),
+                Trainers = _context.TrainerDb.ToList()
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult AddTrainer(TrainerCourseViewModel viewModel)
+        {
+            var model = new TrainerCourse
+            {
+                CourseId = viewModel.CourseId,
+                TrainerId = viewModel.TrainerId
+            };
+
+            List<TrainerCourse> trainerCourse = _context.TrainerCourseDb.ToList();
+            bool alreadyExist = trainerCourse.Any(item => item.CourseId == model.CourseId && item.TrainerId == model.TrainerId);
+            if (alreadyExist == true)
+            {
+                ModelState.AddModelError("", "Trainer is already assigned this Course");
+                return RedirectToAction("GetTrainers", "Course");
+            }
+            _context.TrainerCourseDb.Add(model);
+            _context.SaveChanges();
+
+            return RedirectToAction("GetTrainers", "Course");
+        }
+        [HttpGet]
+        public ActionResult RemoveTrainer()
+        {
+            var trainers = _context.TrainerCourseDb.Select(t => t.Trainer)
+                .Distinct()
+                .ToList();
+            var courses = _context.TrainerCourseDb.Select(t => t.Course)
+                .Distinct()
+                .ToList();
+
+            var viewModel = new TrainerCourseViewModel
+            {
+                Courses = courses,
+                Trainers = trainers
+            };
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult RemoveTrainer(TrainerCourseViewModel viewModel)
+        {
+            var userTeam = _context.TrainerCourseDb
+                .SingleOrDefault(t => t.CourseId == viewModel.CourseId && t.TrainerId == viewModel.TrainerId);
+            if (userTeam == null)
+            {
+                ModelState.AddModelError("", "Trainer is not assignned in this Course");
+                return RedirectToAction("GetTrainers", "Course");
+            }
+
+            _context.TrainerCourseDb.Remove(userTeam);
+            _context.SaveChanges();
+
+            return RedirectToAction("GetTrainers", "Course");
         }
     }
 }

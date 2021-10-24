@@ -32,7 +32,10 @@
                         else if (User.IsInRole(Role.Staff))
                         {
                             <li>@Html.ActionLink("Trainee List", "TraineeList", "Staff")</li>
-                            <li>@Html.ActionLink("Category List", "CategoryList", "Staff")</li>
+                            <li>@Html.ActionLink("Category List", "Index", "Category")</li>
+                            <li>@Html.ActionLink("Course List", "Index", "Course")</li>
+                            <li>@Html.ActionLink("Trainer List", "GetTrainers", "Course")</li>
+
                         }
                     }
                 </ul>
