@@ -29,6 +29,10 @@
                             <li>@Html.ActionLink("Staff List", "StaffList", "Admin")</li>
                             <li>@Html.ActionLink("Trainer List", "TrainerList", "Admin")</li>
                         }
+                        else if (User.IsInRole(Role.Staff))
+                        {
+                            <li>@Html.ActionLink("Trainee List", "TraineeList", "Staff")</li>
+                        }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
