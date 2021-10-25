@@ -209,6 +209,10 @@
     <Compile Include="Migrations\202110240832558_TrainerCourseDb.Designer.cs">
       <DependentUpon>202110240832558_TrainerCourseDb.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110240927131_TraineeCourseDb.cs" />
+    <Compile Include="Migrations\202110240927131_TraineeCourseDb.Designer.cs">
+      <DependentUpon>202110240927131_TraineeCourseDb.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -218,18 +222,22 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Staff.cs" />
     <Compile Include="Models\Trainee.cs" />
+    <Compile Include="Models\TraineeCourse.cs" />
     <Compile Include="Models\Trainer.cs" />
     <Compile Include="Models\TrainerCourse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Util\Role.cs" />
+    <Compile Include="ViewModel\CourseTraineeViewModel.cs" />
     <Compile Include="ViewModel\CourseTrainerViewModel.cs" />
     <Compile Include="ViewModel\CourseViewModel.cs" />
     <Compile Include="ViewModel\CreateStaffViewModel.cs" />
     <Compile Include="ViewModel\CreateTraineeViewModel.cs" />
     <Compile Include="ViewModel\CreateTrainerViewModel.cs" />
     <Compile Include="ViewModel\PasswordViewModel.cs" />
+    <Compile Include="ViewModel\TraineeCourseViewModel.cs" />
     <Compile Include="ViewModel\TrainerCourseViewModel.cs" />
+    <Compile Include="Views\Course\GetTrainees.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -307,6 +315,9 @@
     <Content Include="Views\Course\GetTrainers.cshtml" />
     <Content Include="Views\Course\AddTrainer.cshtml" />
     <Content Include="Views\Course\RemoveTrainer.cshtml" />
+    <Content Include="Views\Course\AddTrainee.cshtml" />
+    <Content Include="Views\Course\RemoveTrainee.cshtml" />
+    <Content Include="Views\Course\GetTrainees.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -348,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110240832558_TrainerCourseDb.resx">
       <DependentUpon>202110240832558_TrainerCourseDb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110240927131_TraineeCourseDb.resx">
+      <DependentUpon>202110240927131_TraineeCourseDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
