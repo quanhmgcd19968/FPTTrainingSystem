@@ -15,6 +15,7 @@ namespace DemoProject1.Models
         public DbSet<Category> CategoryDb { get; set; }
         public DbSet<Course> CourseDb { get; set; }
         public DbSet<TrainerCourse> TrainerCourseDb { get; set; }
+        public DbSet<TraineeCourse> TraineeCourseDb { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
