@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<DemoProject1.ViewModel.CourseTraineeViewModel>
 @{ ViewBag.Title = "GetTrainees"; }
 
-<h2>Trainees in course</h2>
+<h2>Assign trainees to course</h2>
 
 <div>
     @Html.ActionLink("Assign Trainee", "AddTrainee", "Course", new { @class = "btn btn-success" })
     @Html.ActionLink("Remove Trainee", "RemoveTrainee", "Course", new { @class = "btn btn-danger" })
+    <br><br>
 </div>
 
 @using (Html.BeginForm("GetTrainees", "Course", FormMethod.Get))
@@ -13,7 +14,7 @@
 <div class="form-group">
     @Html.TextBox("SearchCourse", null, new { @class = "form-control" })
 </div>
-                <button type="submit" class="btn btn-primary">Search</button>}
+                <button type="submit" class="btn btn-primary">Search</button><br><br>}
 
 <table class="table">
     <thead class="thead-dark">
