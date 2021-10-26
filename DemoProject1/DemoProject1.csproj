@@ -237,7 +237,6 @@
     <Compile Include="ViewModel\PasswordViewModel.cs" />
     <Compile Include="ViewModel\TraineeCourseViewModel.cs" />
     <Compile Include="ViewModel\TrainerCourseViewModel.cs" />
-    <Compile Include="Views\Course\GetTrainees.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
