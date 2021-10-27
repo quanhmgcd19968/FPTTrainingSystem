@@ -1,6 +1,7 @@
 ﻿using DemoProject1.Models;
 using DemoProject1.Util;
 using Microsoft.AspNet.Identity;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -51,6 +52,22 @@ namespace DemoProject1.Controllers
 
             _context.SaveChanges();
             return RedirectToAction("Index", "Trainers");
+        }
+
+
+        [HttpGet]
+        public ActionResult Courses()
+        {
+            var trainerId = User.Identity.GetUserId();
+            var trainer = _context.TrainerDb.ToList();
+            var course = _context.CourseDb
+                .Include(t => t.Category)
+                .ToList();
+            var courses = _context.TrainerCourseDb
+                .Where(t => t.Trainer.TrainerId == trainerId)
+                .Select(t => t.Course)
+                .ToList();
+            return View(courses);
         }
 
     }
