@@ -38,6 +38,10 @@
                             <li>@Html.ActionLink("Trainee in Course", "GetTrainees", "Course")</li>
 
                         }
+                        else if (User.IsInRole(Role.Trainer))
+                        {
+                            <li>@Html.ActionLink("Profile", "Index", "Trainers")</li>
+                        }
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
