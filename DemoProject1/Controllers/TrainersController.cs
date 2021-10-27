@@ -22,5 +22,36 @@ namespace DemoProject1.Controllers
                 .SingleOrDefault(t => t.TrainerId == userId);
             return View(trainerInDb);
         }
+
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            var trainerInDb = _context.TrainerDb
+                .SingleOrDefault(t => t.TrainerId == id);
+            if (trainerInDb == null)
+            {
+                return HttpNotFound();
+            }
+            return View(trainerInDb);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Trainer trainer)
+        {
+            var trainerInDb = _context.TrainerDb.SingleOrDefault(t => t.TrainerId == trainer.TrainerId);
+            if (trainerInDb == null)
+            {
+                return HttpNotFound();
+            }
+            trainerInDb.Name = trainer.Name;
+            trainerInDb.Age = trainer.Age;
+            trainerInDb.Address = trainer.Address;
+            trainerInDb.Specialty = trainer.Specialty;
+
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Trainers");
+        }
+
     }
 }
