@@ -70,5 +70,15 @@ namespace DemoProject1.Controllers
             return View(courses);
         }
 
+        [HttpGet]
+        public ActionResult CourseTrainees(int id)
+        {
+            var user = _context.Users.ToList();
+            var traineesCourse = _context.TraineeCourseDb
+                .Where(t => t.CourseId == id)
+                .Select(t => t.Trainee)
+                .ToList();
+            return View(traineesCourse);
+        }
     }
 }
