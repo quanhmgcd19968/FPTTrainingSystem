@@ -326,11 +326,11 @@
     <Content Include="Views\Trainers\CourseTrainees.cshtml" />
     <Content Include="Views\Trainee\Index.cshtml" />
     <Content Include="Views\Trainee\Courses.cshtml" />
+    <Content Include="Views\Trainee\CourseTrainees.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Data\" />
-    <Folder Include="Views\Trainer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
