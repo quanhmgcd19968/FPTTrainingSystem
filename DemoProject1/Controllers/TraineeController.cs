@@ -25,3 +25,4 @@ namespace DemoProject1.Controllers
             return View(traineeInDb);
         }
     }
+}
