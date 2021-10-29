@@ -204,7 +204,7 @@ namespace DemoProject1.Controllers
                 .SingleOrDefault(t => t.CourseId == viewModel.CourseId && t.TrainerId == viewModel.TrainerId);
             if (userTeam == null)
             {
-                ModelState.AddModelError("", "Trainer is not assignned in this Course");
+                ModelState.AddModelError("", "Trainer is not assigned in this Course");
                 return RedirectToAction("GetTrainers", "Course");
             }
 
