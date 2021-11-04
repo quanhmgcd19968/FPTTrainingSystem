@@ -109,17 +109,13 @@ namespace DemoProject1.Controllers
         {
             var CourseInDb = _context.CourseDb
                 .SingleOrDefault(t => t.Id == id);
-            /*var CoursesTraineeInDb = _context.TraineesCourses
-                .SingleOrDefault(t => t.CourseId == id);
-            var CoursesTrainerInDb = _context.TrainersCourses
-                .SingleOrDefault(t => t.CourseId == id);*/
+
             if (CourseInDb == null)
             {
                 ModelState.AddModelError("", "Course is not Exist");
                 return RedirectToAction("Index", "Course");
             }
-            /*            _context.TrainersCourses.Remove(CoursesTrainerInDb);
-                        _context.TraineesCourses.Remove(CoursesTraineeInDb);*/
+
             _context.CourseDb.Remove(CourseInDb);
             _context.SaveChanges();
             return RedirectToAction("Index", "Course");
@@ -177,7 +173,6 @@ namespace DemoProject1.Controllers
             }
             _context.TrainerCourseDb.Add(model);
             _context.SaveChanges();
-
             return RedirectToAction("GetTrainers", "Course");
         }
         [HttpGet]
@@ -258,7 +253,7 @@ namespace DemoProject1.Controllers
                     Course = res.Key,
                     Trainees = res.Select(u => u.Trainee).ToList()
                 })
-                .ToList();
+                .ToList(); // get all data and show as a list form
             if (!string.IsNullOrEmpty(SearchCourse))
             {
                 viewModel = viewModel
@@ -287,15 +282,15 @@ namespace DemoProject1.Controllers
         [HttpPost]
         public ActionResult RemoveTrainee(TraineeCourseViewModel viewModel)
         {
-            var userTeam = _context.TraineeCourseDb
+            var trainees = _context.TraineeCourseDb
                 .SingleOrDefault(t => t.CourseId == viewModel.CourseId && t.TraineeId == viewModel.TraineeId);
-            if (userTeam == null)
+            if (trainees == null)
             {
                 ModelState.AddModelError("", "Trainee is not assigned in this Course");
                 return RedirectToAction("GetTrainees", "Course");
             }
 
-            _context.TraineeCourseDb.Remove(userTeam);
+            _context.TraineeCourseDb.Remove(trainees);
             _context.SaveChanges();
 
             return RedirectToAction("GetTrainees", "Course");

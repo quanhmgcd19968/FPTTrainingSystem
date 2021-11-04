@@ -6,7 +6,7 @@ namespace DemoProject1.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("AzureDeployApp", throwIfV1Schema: false)
+            : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
         public DbSet<Staff> StaffDb { get; set; }
