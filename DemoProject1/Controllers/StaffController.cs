@@ -83,7 +83,6 @@ namespace DemoProject1.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(viewModel);
         }
         private void AddErrors(IdentityResult result)
@@ -132,6 +131,8 @@ namespace DemoProject1.Controllers
             traineeInDb.Name = trainee.Name;
             traineeInDb.Age = trainee.Age;
             traineeInDb.Address = trainee.Address;
+            traineeInDb.DateOfBirth = trainee.DateOfBirth;
+            traineeInDb.Education = trainee.Education;
 
             _context.SaveChanges();
             return RedirectToAction("TraineeList", "Staff");

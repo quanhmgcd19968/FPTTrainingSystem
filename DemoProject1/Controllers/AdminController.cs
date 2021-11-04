@@ -81,7 +81,6 @@ namespace DemoProject1.Controllers
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(viewModel);
         }
         private void AddErrors(IdentityResult result)
@@ -141,8 +140,6 @@ namespace DemoProject1.Controllers
             return View();
         }
 
-        //
-        // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> StaffChangePassword(PasswordViewModel model, string id)
@@ -203,8 +200,6 @@ namespace DemoProject1.Controllers
                 }
                 AddErrors(result);
             }
-
-            // If we got this far, something failed, redisplay form
             return View(viewModel);
         }
         [HttpGet]
@@ -255,8 +250,6 @@ namespace DemoProject1.Controllers
             return View();
         }
 
-        //
-        // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> TrainerChangePassword(PasswordViewModel model, string id)
