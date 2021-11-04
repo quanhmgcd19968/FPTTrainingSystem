@@ -34,10 +34,6 @@ namespace DemoProject1.Controllers
         [HttpPost]
         public ActionResult CreateCategory(Category category)
         {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
             var newCategory = new Category()
             {
                 Name = category.Name,
@@ -62,7 +58,6 @@ namespace DemoProject1.Controllers
         [HttpGet]
         public ActionResult EditCategory(int id)
         {
-
             var categoryInDb = _context.CategoryDb.SingleOrDefault(t => t.Id == id);
             if (categoryInDb == null)
             {
@@ -73,10 +68,6 @@ namespace DemoProject1.Controllers
         [HttpPost]
         public ActionResult EditCategory(Category category)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(category);
-            }
             var categoryInDb = _context.CategoryDb.SingleOrDefault(t => t.Id == category.Id);
             if (categoryInDb == null)
             {

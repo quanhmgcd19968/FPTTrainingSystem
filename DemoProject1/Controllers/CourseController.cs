@@ -44,16 +44,6 @@ namespace DemoProject1.Controllers
         [HttpPost]
         public ActionResult CreateCourse(CourseViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                var viewModel = new CourseViewModel
-                {
-                    Course = model.Course,
-                    Category = _context.CategoryDb.ToList()
-                };
-                return View(viewModel);
-            }
-
             var newCourse = new Course()
             {
                 Name = model.Course.Name,
@@ -83,15 +73,6 @@ namespace DemoProject1.Controllers
         [HttpPost]
         public ActionResult EditCourse(CourseViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                var viewModel = new CourseViewModel
-                {
-                    Course = model.Course,
-                    Category = _context.CategoryDb.ToList()
-                };
-                return View(viewModel);
-            }
             var CourseInDb = _context.CourseDb
                 .SingleOrDefault(t => t.Id == model.Course.Id);
             if (CourseInDb == null)
@@ -112,7 +93,6 @@ namespace DemoProject1.Controllers
 
             if (CourseInDb == null)
             {
-                ModelState.AddModelError("", "Course is not Exist");
                 return RedirectToAction("Index", "Course");
             }
 
@@ -168,7 +148,6 @@ namespace DemoProject1.Controllers
             bool alreadyExist = trainerCourse.Any(item => item.CourseId == model.CourseId && item.TrainerId == model.TrainerId);
             if (alreadyExist == true)
             {
-                ModelState.AddModelError("", "Trainer is already assigned this Course");
                 return RedirectToAction("GetTrainers", "Course");
             }
             _context.TrainerCourseDb.Add(model);
@@ -195,15 +174,14 @@ namespace DemoProject1.Controllers
         [HttpPost]
         public ActionResult RemoveTrainer(TrainerCourseViewModel viewModel)
         {
-            var userTeam = _context.TrainerCourseDb
+            var trainer = _context.TrainerCourseDb
                 .SingleOrDefault(t => t.CourseId == viewModel.CourseId && t.TrainerId == viewModel.TrainerId);
-            if (userTeam == null)
+            if (trainer == null)
             {
-                ModelState.AddModelError("", "Trainer is not assigned in this Course");
                 return RedirectToAction("GetTrainers", "Course");
             }
 
-            _context.TrainerCourseDb.Remove(userTeam);
+            _context.TrainerCourseDb.Remove(trainer);
             _context.SaveChanges();
 
             return RedirectToAction("GetTrainers", "Course");
@@ -230,7 +208,6 @@ namespace DemoProject1.Controllers
             bool alreadyExist = traineeCourse.Any(item => item.CourseId == model.CourseId && item.TraineeId == model.TraineeId);
             if (alreadyExist == true)
             {
-                ModelState.AddModelError("", "Trainee is already assigned this Course");
                 return RedirectToAction("GetTrainees", "Course");
             }
             _context.TraineeCourseDb.Add(model);
@@ -286,7 +263,6 @@ namespace DemoProject1.Controllers
                 .SingleOrDefault(t => t.CourseId == viewModel.CourseId && t.TraineeId == viewModel.TraineeId);
             if (trainees == null)
             {
-                ModelState.AddModelError("", "Trainee is not assigned in this Course");
                 return RedirectToAction("GetTrainees", "Course");
             }
 
